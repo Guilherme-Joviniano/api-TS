@@ -4,8 +4,7 @@ export default class UnsupportedStoreData extends CustomError {
 
     private static UNSUPPORTED_STORE_DATA: string = "Please set correctly data to the create a user!"
     private static CODE: number = 202
-
-    private constructor(public code: number, public message: string) { 
+    private constructor(public code: number, public message: string, public type: string = 'UnsupportedStoreData') { 
         super(message)
     }
     

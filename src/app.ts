@@ -1,6 +1,10 @@
 import express from "express";
+
+// rotas
 import homeRouter from './routes/home';
 import userRouter from './routes/user';
+// middlewares
+import handleError from './middlewares/CustomizedErrorHandler';
 
 
 export class App {
@@ -10,6 +14,9 @@ export class App {
         this.server = express();
         this.middleware();
         this.router();
+        // Handle the customs errors!
+        this.server.use(handleError);
+
     }
 
     private middleware() {

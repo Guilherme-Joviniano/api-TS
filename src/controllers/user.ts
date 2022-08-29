@@ -1,25 +1,22 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { Service } from "../services/user";
 import { TypedResquestBody } from "../types/TypedRequestBody";
-import { UserModel } from "../types/User";
-import UnsupportedStoreData from "../Exceptions/UnsupportedStoreData";
+import { UserModel } from "../models/UserModel";
+import UnsupportedStoreData from "../exceptions/UnsupportedStoreData";
 
 class Controller {
     //Create a new User!
-    public store(req: TypedResquestBody<UserModel>, res: Response) {   
+    public store(req: TypedResquestBody<UserModel>, res: Response, next: NextFunction) {
         try {
-
-        const { email, lastname, name, password } = req.body;
-    
-        if (!email || !lastname || !name || !password) throw UnsupportedStoreData.ERROR;
-        
-        return Service.store(req, res); 
-       
-        } catch (e) {
-            const result = (e as UnsupportedStoreData).message;
-            console.log(result);
-            return res.status(202).json({ error: [result] });
-        }}
+            const { email, name, lastname, password } = req.body
+            console.log(req.body)
+            if (!email || !name || !lastname || !password) throw UnsupportedStoreData.ERROR
+            // check the fields individualy with the UserModel methods
+            return Service.store(req, res);
+        } catch (err) {
+            next(err);
+        }
+    }
 }
 
 export const controller = new Controller();

@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response, Router  } from "express";
-import customizedErrorHandler from '../Exceptions/handler/CustomizedExceptionHandler';
+import { CustomErrors } from "../exceptions/CustomErrors";
+import customizedErrorHandler from '../exceptions/handler/CustomizedExceptionHandler';
 
-const router: Router = Router();
+const handleError = (err: CustomErrors, req: Request, res: Response, next: NextFunction) => {
+    customizedErrorHandler.handleError(err, res, next);
+}
 
-router.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-    customizedErrorHandler.handleError(err, res);
-})
+export default handleError;
