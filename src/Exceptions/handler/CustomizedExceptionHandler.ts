@@ -1,7 +1,7 @@
 import { NextFunction, Response } from 'express';
 import UnsupportedStoreData from '../UnsupportedStoreData';
 import { CustomErrors } from '../CustomErrors';
-import { HttpCode } from '../../types/ExceptionTypes';
+import { HttpCode } from '../../types/HtppCodes';
 
 class CustomizedExceptionHandler {
     handleError(err: CustomErrors, res: Response, next: NextFunction) {

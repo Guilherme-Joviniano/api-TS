@@ -1,4 +1,4 @@
-import { HttpCode } from '../types/ExceptionTypes';
+import { HttpCode } from '../types/HtppCodes';
 
 
 interface AppErrorArgs {

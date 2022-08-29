@@ -17,6 +17,7 @@ class Controller {
             next(err);
         }
     }
+    // Create the delete and the update controller and respectives services!
 }
 
 export const controller = new Controller();
