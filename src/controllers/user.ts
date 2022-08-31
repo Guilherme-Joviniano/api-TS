@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { Service } from "../services/user";
 import { TypedResquestBody } from "../types/TypedRequestBody";
-import { UserModel } from "../models/UserModel";
+import { UserModel } from "../models/UserSchema.ts";
 import UnsupportedStoreData from "../exceptions/UnsupportedStoreData";
 
 class Controller {

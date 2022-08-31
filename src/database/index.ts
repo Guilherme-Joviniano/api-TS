@@ -1,16 +1,28 @@
-// create a class to connect with mongoose and ...
+import moongose, { ConnectOptions, Mongoose } from 'mongoose';
 
-const name: string = "asdasd";
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+
+const connectionURL: string = (process.env.CONNECTION_KEY as string);
 
 class Database {
-
-    private constructor(connectionURL: string) {
-    };
+    static instance: Database;
     
-    static connection: Database = new Database('moongose: asdadsad');
+    private connection: moongose.Connection;
+    
+    private constructor(connectionURL: string) {
+        this.connection = moongose.createConnection(connectionURL)
+    }
 
-};
+    static getConnection(connectionURL: string): moongose.Connection {
+        if (Database.instance) return Database.instance.connection
+        Database.instance = new Database(connectionURL);
+        return Database.instance.connection;
+    }
+}
 
-Database.connection
+const connection = Database.getConnection(connectionURL)
 
-
+export default connection

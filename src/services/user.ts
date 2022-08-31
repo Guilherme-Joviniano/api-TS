@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { TypedResquestBody } from "../types/TypedRequestBody";
-import { UserModel } from "../models/UserModel";
+import { UserModel } from "../models/UserSchema.ts";
 
 export class Service {
     public static store(req: TypedResquestBody<UserModel>, res: Response) {
