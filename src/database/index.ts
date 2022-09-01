@@ -7,16 +7,18 @@ dotenv.config();
 
 const connectionURL: string = (process.env.CONNECTION_KEY as string);
 
+console.log(connectionURL)
+
 class Database {
     static instance: Database;
     
-    private connection: moongose.Connection;
+    private connection: Promise<typeof moongose>;
     
     private constructor(connectionURL: string) {
-        this.connection = moongose.createConnection(connectionURL)
+        this.connection = moongose.connect(connectionURL, { useNewUrlParser: true, useCreateIndex: true })
     }
 
-    static getConnection(connectionURL: string): moongose.Connection {
+    static getConnection(connectionURL: string): Promise<typeof moongose> {
         if (Database.instance) return Database.instance.connection
         Database.instance = new Database(connectionURL);
         return Database.instance.connection;

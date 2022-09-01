@@ -1,10 +1,15 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { TypedResquestBody } from "../types/TypedRequestBody";
-import { UserModel } from "../models/UserSchema.ts";
+import { User, UserType } from "../models/user";
+import { nextTick } from "process";
 
 export class Service {
-    public static store(req: TypedResquestBody<UserModel>, res: Response) {
-        // make the bussines logic to create in the DB
-        return res.json(req.body)
+    public static async store(req: TypedResquestBody<UserType>, res: Response, next: NextFunction) {
+        try {
+            const user = await User.create(req.body);
+            return user;
+        } catch (err) {
+            next(err);
+        }
     }
 }

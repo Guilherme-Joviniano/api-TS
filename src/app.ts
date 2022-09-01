@@ -5,7 +5,7 @@ import homeRouter from './routes/home';
 import userRouter from './routes/user';
 // middlewares
 import handleError from './middlewares/CustomizedErrorHandler';
-import './models/UserSchema'
+import './database'
 
 export class App {
     public server: express.Application;
