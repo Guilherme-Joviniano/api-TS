@@ -4,7 +4,7 @@ import express from "express";
 import homeRouter from './routes/home';
 import userRouter from './routes/user';
 // middlewares
-import handleError from './middlewares/CustomizedErrorHandler';
+import handleErrors from './middlewares/CustomizedErrorHandler';
 import './database'
 
 export class App {
@@ -13,17 +13,17 @@ export class App {
     constructor() {
         this.server = express();
         this.middleware();
-        this.router();
-        // Handle the customs errors!
-        this.server.use(handleError);
-
+        this.router(); 
+        this.handlerErrorEntity();
     }
-
     private middleware() {
         this.server.use(express.json());
     }
     private router() {
         this.server.use('/', homeRouter);
         this.server.use('/user/', userRouter);
+    }
+    private handlerErrorEntity() {
+        this.server.use(handleErrors)
     }
 }

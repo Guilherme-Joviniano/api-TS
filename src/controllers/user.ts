@@ -2,18 +2,22 @@ import { NextFunction, Request, Response } from "express";
 import { Service } from "../services/user";
 import { TypedResquestBody } from "../types/TypedRequestBody";
 import UnsupportedStoreData from "../exceptions/UnsupportedStoreData";
-import { User, UserType } from '../models/user';
+import { User, UserModel } from '../models/user';
 
 class Controller {
     //Create a new User!
-    public store(req: TypedResquestBody<UserType>, res: Response, next: NextFunction) {
+    public async store (req: TypedResquestBody<UserModel>, res: Response, next: NextFunction) {
         try {
             const { email, firstName, lastName, password } = req.body
 
-            if (!email || !firstName || !lastName || !password) throw UnsupportedStoreData.ERROR
+            if (!email || !firstName || !lastName || !password) throw UnsupportedStoreData.instance
 
+            const user = await Service.store(req, res, next);
+            
+            const response = user?.toJSON();
 
-            return Service.store(req, res, next);
+            return res.status(200).json(response);
+
         } catch (err) {
             next(err);
         }

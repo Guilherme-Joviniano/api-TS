@@ -1,8 +1,14 @@
 import { Schema, model } from "mongoose";
+import validator from "validator";
 
-
-export class UserType {
-    constructor(public email: string, public password: string, public firstName: string, public lastName?: string) {}
+export class UserModel {
+    constructor(public email: string, public password: string, public firstName: string, public lastName?: string) { }
+    
+    public static checkEmail = (email: string): boolean => {
+        if (email) return false;
+        return validator.isEmail(email);
+    };
+    
 }
 
 const userSchema = new Schema({
@@ -24,5 +30,7 @@ const userSchema = new Schema({
     tiktok_id: String
 })
 
-export const User = model('User', userSchema) 
+
+
+export const User = model('User', userSchema)
 

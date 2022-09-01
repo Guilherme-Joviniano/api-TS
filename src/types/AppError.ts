@@ -1,11 +1,9 @@
-import { HttpCode } from '../types/HtppCodes';
+import { HttpCode } from './HtppCodes';
 
-
-interface AppErrorArgs {
+export default interface AppErrorArgs {
     name?: string;
     httpCode: HttpCode;
     description: string;
     isOperational?: boolean;
 }
 
-//Create the AppError class

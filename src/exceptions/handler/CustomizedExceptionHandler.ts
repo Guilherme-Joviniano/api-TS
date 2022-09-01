@@ -1,28 +1,16 @@
 import { NextFunction, Request, Response } from 'express';
 import UnsupportedStoreData from '../UnsupportedStoreData';
-import { CustomErrors } from '../CustomErrors';
+import { CustomErrors } from '../../types/CustomErrors';
 import { HttpCode } from '../../types/HtppCodes';
+import DuplicateUser from '../DuplicateUser';
 
-class CustomizedExceptionHandler {
-    handleError(err: CustomErrors, res: Response, next: NextFunction) {
-        if (err.type === 'UnsupportedStoreData' ) this.handleUnsupportedStoreData(err, res, next)
-        else this.handleCriticalError(err, res, next)
-    }
-
-    private handleUnsupportedStoreData(err: Error | UnsupportedStoreData, res: Response, next: NextFunction): Response {
-        return res.status(HttpCode.BAD_REQUEST).json({
-            error: err.message,
-            code: HttpCode.BAD_REQUEST
-        })
-    }
-
-    private handleCriticalError (err: Error, res: Response, req: Request): Response {
-        return res.status(HttpCode.BAD_REQUEST).json({
-            error: err.message,
-            code: HttpCode.BAD_REQUEST
+export default class CustomizedExceptionHandler {
+    public static handleError(err: CustomErrors, res: Response, next: NextFunction) {
+        return res.status(err.httpCode).json({
+            name: err.name,
+            description: err.description,
+            code: err.httpCode,
+            isOperational: err.isOperational,
         })
     }
 }
-
-const customizedExceptionHandler = new CustomizedExceptionHandler();
-export default customizedExceptionHandler
