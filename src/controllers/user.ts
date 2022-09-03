@@ -1,28 +1,25 @@
 import { NextFunction, Request, Response } from "express";
-import { Service } from "../services/user";
+import service from "../services/user";
 import { TypedResquestBody } from "../types/TypedRequestBody";
-import UnsupportedStoreData from "../exceptions/UnsupportedStoreData";
-import { User, UserModel } from '../models/user';
+import { UserModel } from '../models/user';
+import validateUser from "../validations/UserValidate";
+import { HttpCode } from "../types/HtppCodes";
 
 class Controller {
-    //Create a new User!
-    public async store (req: TypedResquestBody<UserModel>, res: Response, next: NextFunction) {
+    public async store(req: TypedResquestBody<UserModel>, res: Response, next: NextFunction): Promise<Response<any, Record<string, any>> | undefined | NextFunction> {
         try {
-            const { email, firstName, lastName, password } = req.body
 
-            if (!email || !firstName || !lastName || !password) throw UnsupportedStoreData.instance
-
-            const user = await Service.store(req, res, next);
+            validateUser(req, res);
             
-            const response = user?.toJSON();
+            const user = await service.store(req, res, next);
 
-            return res.status(200).json(response);
+            return res.status(HttpCode.OK).json(user);
 
         } catch (err) {
             next(err);
         }
     }
-    // Create the delete and the update controller and respectives services!
+    // public async update (req: TypedResquestBody<{}, res: >)
 }
 
 export const controller = new Controller();

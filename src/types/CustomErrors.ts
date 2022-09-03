@@ -1,4 +1,4 @@
-import DuplicateUser from '../exceptions/DuplicateUser'
-import UnsupportedStoreData from '../exceptions/UnsupportedStoreData'
+import { DuplicateUser, UnsupportedStoreData } from '../validations/UserValidate'
+
 
 export type CustomErrors = UnsupportedStoreData | DuplicateUser
