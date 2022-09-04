@@ -1,14 +1,21 @@
-import { Request, Response } from 'express';
-
+import { Request, ParamsDictionary, Response } from 'express-serve-static-core';
+import { HttpCode } from '../types/HtppCodes';
 
 class Post {
-    store (req: Request, res: Response) {
-        console.log(req)
-        return res.json({
-            message: ['ok']
+    store(req: Request, res: Response) {
+      
+      if (!req.file) {
+        return res.status(HttpCode.BAD_REQUEST).json({
+          message: ['Failed Video Uploaded!']
         })
+      }
+        
+      return res.status(HttpCode.OK).json({
+        message: ['Success Video Uploades!']
+      })
+      
     }
 }
 
-const controller = new Post();
-export default controller;
+
+export default new Post;

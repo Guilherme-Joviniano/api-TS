@@ -4,6 +4,6 @@ import upload from '../middlewares/upload'
 
 const router: Router = Router();
 
-router.post('/', upload.single('video'), controller.store);
+router.post('/upload', upload.single('postVideo'), controller.store);
 
 export default router;

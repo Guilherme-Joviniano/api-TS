@@ -1,12 +1,15 @@
-import multer from "multer";
+import multer from 'multer';
+import { extname, resolve } from 'path';
 
-const storage = multer.diskStorage({
-    destination(req, file, callback) {
-        callback(null, '../uploads')
-    },
-    filename: (req, file, callback) => {
-        callback(null, `${Date.now()} - ${file.originalname}`)
-    }
-})
+const randomToken = () => Math.floor(Math.random() * 10000 + 10000);
 
-export default storage;
+export default {
+    storage: multer.diskStorage({
+        destination: (req, file, cb) => {
+            cb(null, resolve(__dirname, '..', '..', 'uploads', 'video', 'posts'));
+        },
+        filename (req, file, cb) {
+            cb(null, `${Date.now()}_${randomToken()}${extname(file.originalname)}`);
+        },
+    }),
+};
