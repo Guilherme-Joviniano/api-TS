@@ -3,6 +3,7 @@ import express from "express";
 // rotas
 import homeRouter from './routes/home';
 import userRouter from './routes/user';
+import postRouter from './routes/post'
 // middlewares
 import './database'
 
@@ -20,5 +21,6 @@ export class App {
     private router() {
         this.server.use('/', homeRouter);
         this.server.use('/user/', userRouter);
+        this.server.use('/post/', postRouter)
     }
 }

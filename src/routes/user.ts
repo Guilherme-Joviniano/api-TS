@@ -7,4 +7,3 @@ router.post('/', controller.store);
 // router.delete('/',  controller.delete);
 
 export default router;
-1
